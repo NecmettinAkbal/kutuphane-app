@@ -50,3 +50,10 @@ test('zaten iade edilmiş bir kayıt tekrar iade edilemez', () => {
   assert.throws(() => iadeAl(kayit.id), /zaten iade edilmiş/);
 });
 
+test('kitap iade edildiğinde stok bir artar (ikiye katlanmaz)', () => {
+  const kitap = kitapEkle('Suç ve Ceza', 'Dostoyevski', 2);
+  const kayit = oduncVer(kitap.id, 'Ahmet');
+  iadeAl(kayit.id);
+  assert.equal(stokGetir(kitap.id), 2);
+});
+

@@ -36,15 +36,9 @@ function oduncKaydiGuncelle(oduncId, guncelleme) {
     throw new Error(`${oduncId} numaralı ödünç kaydı bulunamadı.`);
   }
 
-  const ilkIadeTarihiVardiMi = Boolean(kayit.iadeTarihi);
+  // Yalnızca kaydın alanlarını günceller; stoğa dokunmaz.
+  // İadede stoğu artırmak iadeAl'ın (src/iade.js) sorumluluğudur.
   Object.assign(kayit, guncelleme);
-
-  // Kayıt ilk kez "iade edildi" olarak işaretleniyorsa, kitabı rafa
-  // geri koymak bu güncellemenin de sorumluluğu: iade edilen bir kayıt
-  // güncellenince kitabın stoğu burada da bir artırılıyor.
-  if (!ilkIadeTarihiVardiMi && kayit.iadeTarihi) {
-    depo.stokArtir(kayit.kitapId, 1);
-  }
 
   return kayit;
 }
